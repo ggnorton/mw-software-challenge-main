@@ -13,6 +13,9 @@ import { EventType, EventStatus } from '../../types/event';
 import EventModal from "../../components/EventModal";
 
 const GlobalStyle = createGlobalStyle`
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
   body {
     margin: 0;
   }
@@ -46,6 +49,9 @@ export function HomePage(props: Props) {
   const [editContent, setEditContent] = useState(true)
   const [eventForm, setEventForm] = useState(defaultEventForm)
   const [formCopy, setFormCopy] = useState(defaultEventForm)
+  const [search, setSearch] = useState('')
+
+  const searchEvents = events.filter(event => event.title.includes(search) || event.title === search)
 
   useEffect(() => {
     dispatch(getEvents());
@@ -127,12 +133,13 @@ export function HomePage(props: Props) {
         <button onClick={openCreateEvent}>
           Create Event
         </button>
+        <input placeholder="Search Events" type="search" onChange={e => setSearch(e.target.value)} />
       </HeaderContainer>
       <EventListContainer>
-        <EventList onView={openViewEvent} events={events} />
+        <EventList onView={openViewEvent} events={searchEvents} />
       </EventListContainer>
       <CalendarContainer>
-        <Calendar onView={openViewEvent} events={events} />
+        <Calendar onView={openViewEvent} events={searchEvents} />
       </CalendarContainer>
       <EventModal
         edit={editContent}

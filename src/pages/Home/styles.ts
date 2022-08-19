@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
+  padding: 4px;
   display: flex;
   height: 40px;
   width: 100%;
@@ -9,10 +10,10 @@ export const HeaderContainer = styled.div`
 `
 
 export const HomeContainer = styled.div`
-  padding-top: 40px;
+  padding-top: 44px;
   display: flex;
   width: 100%;
-  height: calc(100vh - 40px);
+  height: calc(100vh);
 `;
 
 export const EventListContainer = styled.div`
