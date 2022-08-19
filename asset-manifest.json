@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/mw-software-challenge-main/static/css/main.ad198f25.css",
+    "main.js": "/mw-software-challenge-main/static/js/main.47f193df.js",
+    "static/js/787.729322bb.chunk.js": "/mw-software-challenge-main/static/js/787.729322bb.chunk.js",
+    "index.html": "/mw-software-challenge-main/index.html",
+    "main.ad198f25.css.map": "/mw-software-challenge-main/static/css/main.ad198f25.css.map",
+    "main.47f193df.js.map": "/mw-software-challenge-main/static/js/main.47f193df.js.map",
+    "787.729322bb.chunk.js.map": "/mw-software-challenge-main/static/js/787.729322bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ad198f25.css",
+    "static/js/main.47f193df.js"
+  ]
+}
