@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal, { ModalProps } from '../Modal';
 import DatePicker from 'react-datepicker'
 import Input from "../Input";
-import { InputLabel } from "./styles";
+import { ContentContainer, InputLabel, FlexContainer } from './styles';
 import moment from 'moment'
 import { IEventForm } from "../../pages/Home";
 
@@ -11,7 +11,7 @@ interface Props extends ModalProps {
     form: IEventForm
     onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     onDateChange: (value: Date, name: string) => void
-    onDelete: (id: number | string) => void
+    onDelete: (id: number) => void
     onEdit: () => void
     onCancelEdit: () => void
     edit?: boolean
@@ -51,25 +51,25 @@ export default function EventModal ({
         <p>{form.title}</p>
       </div>
       <div>
-        <span>{moment(form.startDate).format(timeFormat)} - {moment(form.endDate).format(timeFormat)}</span>
+        <span>{moment(form.start_time).format(timeFormat)} - {moment(form.end_time).format(timeFormat)}</span>
       </div>
-      <div style={{display: 'flex'}}>
+      <FlexContainer>
         <button onClick={() => confirmDelete()}>{confirm ? 'Confirm Delete' : 'Delete Event'}</button>
         <button onClick={() => onEdit()}>Edit event</button>
-      </div>
+      </FlexContainer>
     </React.Fragment>
   )
 
   const editContent = (
     <React.Fragment>
       <Input name="title" title="Event Title" value={form.title} onChange={onInputChange} />
-      <div style={{display: 'flex'}}>
+      <FlexContainer>
         <InputLabel title="Event Start Date">
           <span>Event Start Date</span>
           <DatePicker
             dateFormat="MMM dd hh:mm"
             minDate={new Date()}
-            selected={form.startDate}
+            selected={form.start_time}
             showTimeInput
             onChange={(val) => onDateChange(val, 'startDate')}
           />
@@ -78,15 +78,15 @@ export default function EventModal ({
           <span>Event End Date</span>
           <DatePicker
             dateFormat="MMM dd hh:mm"
-            minDate={form.startDate}
-            minTime={form.startDate}
-            selected={form.endDate}
+            minDate={form.start_time}
+            minTime={form.start_time}
+            selected={form.end_time}
             showTimeInput
             onChange={(val) => onDateChange(val, 'endDate')}
           />
         </InputLabel>
-      </div>
-      <div style={{display: 'flex'}}>
+      </FlexContainer>
+      <FlexContainer>
         {form.id &&
           <button onClick={() => onCancelEdit()}>
             Cancel Edit
@@ -95,14 +95,14 @@ export default function EventModal ({
         <button type="submit" onClick={onFormSubmit}>
           {form.id ? 'Save Changes' : 'Add Event'}
         </button>
-      </div>
+      </FlexContainer>
     </React.Fragment>
   )
   return (
     <Modal open={open} onClose={onClose}>
-      <div style={{backgroundColor: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+      <ContentContainer>
         {edit ? editContent : readContent}
-      </div>
+      </ContentContainer>
     </Modal>
   )
 }

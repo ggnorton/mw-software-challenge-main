@@ -9,7 +9,8 @@ import { createGlobalStyle } from 'styled-components'
 import faker from "@faker-js/faker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { EventType, EventStatus } from '../../types/event';
+import { EventType } from '../../types/events/event';
+import { EventStatus } from "../../types/events/event.utils"
 import EventModal from "../../components/EventModal";
 
 const GlobalStyle = createGlobalStyle`
@@ -24,9 +25,9 @@ const GlobalStyle = createGlobalStyle`
 const defaultEventForm: IEventForm = {
   id: null,
   title: '',
-  startDate: new Date(),
-  endDate: new Date(),
-  status: 'pending',
+  start_time: new Date(),
+  end_time: new Date(),
+  status: EventStatus.pending,
   address: faker.address.streetAddress()
 }
 
@@ -35,14 +36,14 @@ export interface Props {}
 export interface IEventForm {
   id: number
   title: string
-  startDate: Date
-  endDate: Date
-  status: keyof typeof EventStatus
+  start_time: Date
+  end_time: Date
+  status: EventStatus
   address: string
 }
 
 export function HomePage(props: Props) {
-  const events = useSelector(eventsSelector);
+  const events: EventType[] = useSelector(eventsSelector);
   const dispatch = useDispatch();
 
   const [isCreationModalOpen, setCreationModal] = useState(false)
@@ -94,12 +95,12 @@ export function HomePage(props: Props) {
   }
 
   const openViewEvent = (id) => {
-    const event: EventType = events.find(e => e.id === id)
+    const event = events.find(e => e.id === id)
     setEventForm({
       ...event,
       title: event.title,
-      startDate: new Date(event.start_time),
-      endDate: new Date(event.end_time),
+      start_time: new Date(event.start_time),
+      end_time: new Date(event.end_time),
     })
     setEditContent(false)
     setCreationModal(true)
@@ -114,8 +115,8 @@ export function HomePage(props: Props) {
   const submitForm = () => {
     const formattedForm = {
       ...eventForm,
-      start_time: new Date(eventForm.startDate).toISOString(),
-      end_time: new Date(eventForm.endDate).toISOString(),
+      start_time: new Date(eventForm.start_time).toISOString(),
+      end_time: new Date(eventForm.end_time).toISOString(),
     }
 
     dispatch(createEvent(formattedForm))

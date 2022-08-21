@@ -1,12 +1,12 @@
 import React from "react";
-import { EventType } from "../../types/event";
+import { EventType } from "../../types/events/event";
 import { EventListWrapper } from './styles';
 import moment from 'moment'
-import { Undefinable } from '../../types/common';
+import { Undefinable } from '../../types/common';;
 
 type Props = {
   events: Undefinable<EventType[]>;
-  onView: (id: number | string) => void
+  onView: (id: number) => void
 };
 
 export default function EventList({ onView, events }: Props) {

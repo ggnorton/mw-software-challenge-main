@@ -1,19 +1,21 @@
 import FullCalendar, { EventSourceInput } from "@fullcalendar/react";
-import React, { useEffect, useState } from "react";
-import { EventType } from "../../types/event";
+import React, { useCallback, useEffect, useState } from "react";
+import { EventType } from '../../types/events/event';
+import { EventStatus } from "../../types/events/event.utils"
+
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import { Undefinable } from '../../types/common';
 
 type Props = {
   events: Undefinable<EventType[]>;
-  onView: (id: number | string) => void
+  onView: (id: number) => void
 };
 
 function getStatusColor(status) {
   switch(status) {
-    case 'done':
+    case EventStatus:
       return 'green'
-    case 'in-progress':
+    case EventStatus.inProgress:
       return 'blue'
     default:
       return undefined
@@ -22,9 +24,10 @@ function getStatusColor(status) {
 
 export default function Calendar({ events, onView }: Props) {
   const [calendarEvents, setCalendarEvents] = useState([]);
+  const viewEvent = useCallback(({event}) => onView(+event.id), [onView])
 
   useEffect(() => {
-    setCalendarEvents(
+    setCalendarEvents(() => (
       events.map((event) => {
         return {
           id: event.id,
@@ -33,7 +36,7 @@ export default function Calendar({ events, onView }: Props) {
           end: event.end_time,
           color: getStatusColor(event.status), //@todo: bonus! Change color based on status!
         };
-      })
+      }))
     );
   }, [events, onView]);
 
@@ -41,7 +44,7 @@ export default function Calendar({ events, onView }: Props) {
     <div>
       <h1>Calendar</h1>
       <FullCalendar
-        eventClick={({event}) => onView(+event.id)}
+        eventClick={viewEvent}
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={calendarEvents as EventSourceInput}
