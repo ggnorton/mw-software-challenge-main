@@ -2,9 +2,10 @@ import FullCalendar, { EventSourceInput } from "@fullcalendar/react";
 import React, { useEffect, useState } from "react";
 import { EventType } from "../../types/event";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+import { Undefinable } from '../../types/common';
 
 type Props = {
-  events: EventType[] | undefined;
+  events: Undefinable<EventType[]>;
   onView: (id: number | string) => void
 };
 
