@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CalendarContainer, EventListContainer, HeaderContainer, HomeContainer } from "./styles";
+import { CalendarContainer, EventListContainer, FlexContainer, HeaderContainer, HomeContainer } from "./styles";
 import EventList from "../../components/EventList";
 import Calendar from "../../components/Calendar";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { EventType } from '../../types/events/event';
 import { EventStatus } from "../../types/events/event.utils"
 import EventModal from "../../components/EventModal";
+import { signOut } from '../../redux/user/events';
+import { useNavigate } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -45,6 +47,7 @@ export interface IEventForm {
 export function HomePage(props: Props) {
   const events: EventType[] = useSelector(eventsSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const [isCreationModalOpen, setCreationModal] = useState(false)
   const [editContent, setEditContent] = useState(true)
@@ -61,6 +64,11 @@ export function HomePage(props: Props) {
   useEffect(() => {
     setFormCopy(defaultEventForm)
   }, [isCreationModalOpen])
+
+  const onSignOut = () => {
+    dispatch(signOut())
+    navigate('/login', { replace: true })
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -131,10 +139,13 @@ export function HomePage(props: Props) {
     <HomeContainer>
       <GlobalStyle />
       <HeaderContainer>
-        <button onClick={openCreateEvent}>
-          Create Event
-        </button>
-        <input placeholder="Search Events" type="search" onChange={e => setSearch(e.target.value)} />
+        <FlexContainer>
+          <button onClick={openCreateEvent}>
+            Create Event
+          </button>
+          <input placeholder="Search Events" type="search" onChange={e => setSearch(e.target.value)} />
+        </FlexContainer>
+        <button onClick={onSignOut}>Sign Out</button>
       </HeaderContainer>
       <EventListContainer>
         <EventList onView={openViewEvent} events={searchEvents} />

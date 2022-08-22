@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal, { ModalProps } from '../Modal';
 import DatePicker from 'react-datepicker'
-import Input from "../Input";
 import { ContentContainer, InputLabel, FlexContainer } from './styles';
 import moment from 'moment'
 import { IEventForm } from "../../pages/Home";
@@ -62,7 +61,9 @@ export default function EventModal ({
 
   const editContent = (
     <React.Fragment>
-      <Input name="title" title="Event Title" value={form.title} onChange={onInputChange} />
+      <InputLabel title="Event Title">
+        <input value={form.title} onChange={onInputChange} name="title" />
+      </InputLabel>
       <FlexContainer>
         <InputLabel title="Event Start Date">
           <span>Event Start Date</span>
