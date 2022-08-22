@@ -2,7 +2,7 @@ import React from "react";
 import { HomePage } from "./pages/Home";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { LoginPage } from './pages/Login/index';
@@ -12,7 +12,7 @@ const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 root.render(
   <Provider store={store}>
-  <BrowserRouter>
+  <HashRouter>
       <Routes>
         <Route path="/" element={
           <RequireAuth>
@@ -21,7 +21,7 @@ root.render(
         } />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
-  </BrowserRouter>
+  </HashRouter>
   </Provider>
 );
 
