@@ -13,12 +13,12 @@ type Props = {
 
 function getStatusColor(status) {
   switch(status) {
-    case EventStatus:
+    case EventStatus.done:
       return 'green'
     case EventStatus.inProgress:
       return 'blue'
     default:
-      return undefined
+      return 'silver'
   }
 }
 
